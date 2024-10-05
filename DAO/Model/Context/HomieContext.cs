@@ -23,6 +23,11 @@ namespace DAO.Model.Context
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<EWallet> EWallets { get; set; }
+        public DbSet<TransactionHistory> TransactionHistories { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<CategoryJobPost> CategoryJobPosts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -100,10 +105,41 @@ namespace DAO.Model.Context
                 .WithMany(j => j.Reviews)  // Assuming JobPost has a Reviews collection
                 .HasForeignKey(r => r.JobId);
 
+            // One-to-One relationship between User and EWallet
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.EWallet)
+                .WithOne(w => w.User)
+                .HasForeignKey<EWallet>(w => w.UserId);
+
+            // TransactionHistory to User (One-to-Many)
+            modelBuilder.Entity<TransactionHistory>()
+                .HasOne(t => t.User)
+                .WithMany()
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Restrict);  // Ngăn chặn xóa cascade
+
+            // TransactionHistory to EWallet (One-to-Many)
+            modelBuilder.Entity<TransactionHistory>()
+                .HasOne(t => t.EWallet)
+                .WithMany()
+                .HasForeignKey(t => t.WalletId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CategoryJobPost>()
+        .HasKey(jc => new { jc.JobPostId, jc.CategoryId });
+
+            modelBuilder.Entity<CategoryJobPost>()
+                .HasOne(jc => jc.JobPost)
+                .WithMany(jp => jp.CategoryJobPosts)
+                .HasForeignKey(jc => jc.JobPostId);
+
+            modelBuilder.Entity<CategoryJobPost>()
+                .HasOne(jc => jc.Category)
+                .WithMany(c => c.CategoryJobPost)
+                .HasForeignKey(jc => jc.CategoryId);
+
             base.OnModelCreating(modelBuilder);
-
-
-            //SWPContextSeeder.Seed(modelBuilder);
+            HomieContextSeeder.Seed(modelBuilder);
         }
     }
 }

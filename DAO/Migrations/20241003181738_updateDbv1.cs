@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAO.Migrations
 {
-    public partial class InitDB : Migration
+    public partial class updateDbv1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,6 +51,28 @@ namespace DAO.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EWallets",
+                columns: table => new
+                {
+                    WalletId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EWallets", x => x.WalletId);
+                    table.ForeignKey(
+                        name: "FK_EWallets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobPosts",
                 columns: table => new
                 {
@@ -62,6 +84,7 @@ namespace DAO.Migrations
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -126,6 +149,36 @@ namespace DAO.Migrations
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TransactionHistories",
+                columns: table => new
+                {
+                    TransactionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WalletId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TransactionType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransactionHistories", x => x.TransactionId);
+                    table.ForeignKey(
+                        name: "FK_TransactionHistories_EWallets_WalletId",
+                        column: x => x.WalletId,
+                        principalTable: "EWallets",
+                        principalColumn: "WalletId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TransactionHistories_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,6 +257,12 @@ namespace DAO.Migrations
                 column: "WorkerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EWallets_UserId",
+                table: "EWallets",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobPosts_EmployerId",
                 table: "JobPosts",
                 column: "EmployerId");
@@ -240,6 +299,16 @@ namespace DAO.Migrations
                 column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TransactionHistories_UserId",
+                table: "TransactionHistories",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionHistories_WalletId",
+                table: "TransactionHistories",
+                column: "WalletId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
                 table: "Users",
                 column: "RoleId");
@@ -260,7 +329,13 @@ namespace DAO.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
+                name: "TransactionHistories");
+
+            migrationBuilder.DropTable(
                 name: "JobPosts");
+
+            migrationBuilder.DropTable(
+                name: "EWallets");
 
             migrationBuilder.DropTable(
                 name: "Users");

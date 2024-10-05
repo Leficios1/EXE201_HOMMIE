@@ -23,12 +23,13 @@ namespace DAO.Model
         public DateTime StartDate {  get; set; }
         public DateTime EndDate { get; set; }
         public decimal Price { get; set; }
-        public string Status {  get; set; } //// 'open', 'in_progress', 'completed', 'cancelled'
+        public string Status {  get; set; }
         public DateTime CreateDate { get; set; }
 
         public User Employer { get; set; }
         public ICollection<Application> Applications { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
+        public ICollection<CategoryJobPost> CategoryJobPosts { get; set; }
     }
 }

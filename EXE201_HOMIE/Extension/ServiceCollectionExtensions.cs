@@ -21,6 +21,7 @@ namespace EXE201_HOMIE.Extension
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             //Register Service here
             services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IPostServices, JobPostServices>();
 
 
             return services;

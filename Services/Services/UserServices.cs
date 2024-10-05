@@ -44,7 +44,7 @@ namespace Services.Services
                         return response;
                     }
                     var createUser = _mapper.Map<User>(user);
-                    createUser.AvatarUrl = "https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg";
+                    createUser.AvatarUrl = "c";
                     await _Userrepository.AddAsync(createUser);
                     await _Userrepository.SaveChangesAsync();
                     var result = await _Userrepository.Get().OrderBy(x => x.UserId).Include(x => x.Role).LastAsync();

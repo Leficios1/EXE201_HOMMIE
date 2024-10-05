@@ -46,5 +46,7 @@ namespace DAO.Model
         public ICollection<Review> ReviewsReceived { get; set; }
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessagesReceived { get; set; }
+        public EWallet EWallet { get; set; }
+
     }
 }

@@ -16,6 +16,10 @@ namespace Services.Mapping
         {
             CreateMap<UserRequestDTO, User>().ReverseMap();
             CreateMap<UserResponseDTO, User>().ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id)).ReverseMap();
+            CreateMap<JobPost, JobPostRequestDTO>().ForMember(dest => dest.UserId, otp => otp.MapFrom(src => src.EmployerId)).ReverseMap();
+            CreateMap<ProfilesRequestDTO, Profiles>().ReverseMap();
         }
+
+
     }
 }

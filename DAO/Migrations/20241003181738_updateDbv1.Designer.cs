@@ -4,6 +4,7 @@ using DAO.Model.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAO.Migrations
 {
     [DbContext(typeof(HomieContext))]
-    partial class HomieContextModelSnapshot : ModelSnapshot
+    [Migration("20241003181738_updateDbv1")]
+    partial class updateDbv1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,47 +56,6 @@ namespace DAO.Migrations
                     b.HasIndex("WorkerId");
 
                     b.ToTable("Applications");
-                });
-
-            modelBuilder.Entity("DAO.Model.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("DAO.Model.CategoryJobPost", b =>
-                {
-                    b.Property<int>("JobPostId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.HasKey("JobPostId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("CategoryJobPosts");
                 });
 
             modelBuilder.Entity("DAO.Model.EWallet", b =>
@@ -289,13 +250,6 @@ namespace DAO.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = 1,
-                            RoleName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("DAO.Model.TransactionHistory", b =>
@@ -409,25 +363,6 @@ namespace DAO.Migrations
                     b.Navigation("Worker");
                 });
 
-            modelBuilder.Entity("DAO.Model.CategoryJobPost", b =>
-                {
-                    b.HasOne("DAO.Model.Category", "Category")
-                        .WithMany("CategoryJobPost")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAO.Model.JobPost", "JobPost")
-                        .WithMany("CategoryJobPosts")
-                        .HasForeignKey("JobPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("JobPost");
-                });
-
             modelBuilder.Entity("DAO.Model.EWallet", b =>
                 {
                     b.HasOne("DAO.Model.User", "User")
@@ -537,16 +472,9 @@ namespace DAO.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("DAO.Model.Category", b =>
-                {
-                    b.Navigation("CategoryJobPost");
-                });
-
             modelBuilder.Entity("DAO.Model.JobPost", b =>
                 {
                     b.Navigation("Applications");
-
-                    b.Navigation("CategoryJobPosts");
 
                     b.Navigation("Reviews");
                 });

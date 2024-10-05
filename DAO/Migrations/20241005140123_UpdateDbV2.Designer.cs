@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAO.Migrations
 {
     [DbContext(typeof(HomieContext))]
-    [Migration("20240917150845_InitDB")]
-    partial class InitDB
+    [Migration("20241005140123_UpdateDbV2")]
+    partial class UpdateDbV2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,6 +58,75 @@ namespace DAO.Migrations
                     b.ToTable("Applications");
                 });
 
+            modelBuilder.Entity("DAO.Model.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("DAO.Model.CategoryJobPost", b =>
+                {
+                    b.Property<int>("JobPostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.HasKey("JobPostId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("CategoryJobPosts");
+                });
+
+            modelBuilder.Entity("DAO.Model.EWallet", b =>
+                {
+                    b.Property<int>("WalletId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalletId"), 1L, 1);
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WalletId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("EWallets");
+                });
+
             modelBuilder.Entity("DAO.Model.JobPost", b =>
                 {
                     b.Property<int>("JobId")
@@ -82,6 +151,9 @@ namespace DAO.Migrations
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -221,6 +293,45 @@ namespace DAO.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("DAO.Model.TransactionHistory", b =>
+                {
+                    b.Property<int>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"), 1L, 1);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WalletId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TransactionId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("TransactionHistories");
+                });
+
             modelBuilder.Entity("DAO.Model.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -293,6 +404,36 @@ namespace DAO.Migrations
                     b.Navigation("Worker");
                 });
 
+            modelBuilder.Entity("DAO.Model.CategoryJobPost", b =>
+                {
+                    b.HasOne("DAO.Model.Category", "Category")
+                        .WithMany("CategoryJobPost")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAO.Model.JobPost", "JobPost")
+                        .WithMany("CategoryJobPosts")
+                        .HasForeignKey("JobPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("JobPost");
+                });
+
+            modelBuilder.Entity("DAO.Model.EWallet", b =>
+                {
+                    b.HasOne("DAO.Model.User", "User")
+                        .WithOne("EWallet")
+                        .HasForeignKey("DAO.Model.EWallet", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DAO.Model.JobPost", b =>
                 {
                     b.HasOne("DAO.Model.User", "Employer")
@@ -361,6 +502,25 @@ namespace DAO.Migrations
                     b.Navigation("Reviewer");
                 });
 
+            modelBuilder.Entity("DAO.Model.TransactionHistory", b =>
+                {
+                    b.HasOne("DAO.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DAO.Model.EWallet", "EWallet")
+                        .WithMany()
+                        .HasForeignKey("WalletId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("EWallet");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DAO.Model.User", b =>
                 {
                     b.HasOne("DAO.Model.Role", "Role")
@@ -372,9 +532,16 @@ namespace DAO.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("DAO.Model.Category", b =>
+                {
+                    b.Navigation("CategoryJobPost");
+                });
+
             modelBuilder.Entity("DAO.Model.JobPost", b =>
                 {
                     b.Navigation("Applications");
+
+                    b.Navigation("CategoryJobPosts");
 
                     b.Navigation("Reviews");
                 });
@@ -387,6 +554,9 @@ namespace DAO.Migrations
             modelBuilder.Entity("DAO.Model.User", b =>
                 {
                     b.Navigation("Applications");
+
+                    b.Navigation("EWallet")
+                        .IsRequired();
 
                     b.Navigation("JobPosts");
 
