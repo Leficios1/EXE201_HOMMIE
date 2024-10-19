@@ -15,6 +15,7 @@ namespace Services.Services.Interface
         Task<StatusResponse<JobPost>> UpdateJobPost(JobPostRequestDTO post);
         Task<StatusResponse<JobPost>> DeleteJobPost(int id);
         Task<StatusResponse<JobPost>> GetJobPost(int id);
-        Task<StatusResponse<List<JobPost>>> getAllJobPost();
+        Task<StatusResponse<List<JobPost>>> getAllJobPost(int? pageNumber, int? pageSize);
+        Task<StatusResponse<List<JobPost>>> searchJobPostByCategory(int? pageNumber, int? pageSize, string category);
     }
 }

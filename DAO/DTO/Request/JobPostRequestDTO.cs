@@ -17,5 +17,11 @@ namespace DAO.DTO.Request
         public decimal Price { get; set; }
         public string Status { get; set; } //// 'open', 'in_progress', 'completed', 'cancelled'
         public DateTime CreateDate { get; set; }
+        public List<JobPostCategory> Categorys { get; set; }
+
+    }
+    public class JobPostCategory
+    {
+        public int CategoryId { get; set; }
     }
 }

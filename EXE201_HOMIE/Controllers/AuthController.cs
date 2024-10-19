@@ -33,6 +33,12 @@ namespace EXE201_HOMIE.Controllers
         public async Task<IActionResult> HelloWord()
         {
             return Ok("Completed to authorize");
+        } 
+        [Authorize(Roles = "1, 2")]
+        [HttpGet("testDeploy")]
+        public async Task<IActionResult> Test()
+        {
+            return Ok("Completed to authorize");
         }
     }
 }

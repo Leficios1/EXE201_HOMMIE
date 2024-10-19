@@ -44,6 +44,9 @@ namespace DAO.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TypeJobPost")
+                        .HasColumnType("int");
+
                     b.Property<int>("WorkerId")
                         .HasColumnType("int");
 
@@ -145,6 +148,9 @@ namespace DAO.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("JobType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -289,13 +295,6 @@ namespace DAO.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = 1,
-                            RoleName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("DAO.Model.TransactionHistory", b =>

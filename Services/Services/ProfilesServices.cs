@@ -63,6 +63,29 @@ namespace Services.Services
 
         }
 
+        public async Task<StatusResponse<Profiles>> getProfile(int Userid)
+        {
+            try
+            {
+                var result = new StatusResponse<Profiles>();
+                var data = await _profileRepository.Get().Where(x => x.UserId == Userid).SingleOrDefaultAsync();
+                if (data == null)
+                {
+                    result.statusCode = System.Net.HttpStatusCode.BadRequest;
+                    result.Message = "not found Profiles";
+                    return result;
+                }
+                result.Data = data;
+                result.statusCode = System.Net.HttpStatusCode.OK;
+                result.Message = "Succesful";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<StatusResponse<Profiles>> UpdateProfiles(int id, ProfilesRequestDTO dto)
         {
             try

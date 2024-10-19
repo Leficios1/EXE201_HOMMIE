@@ -18,6 +18,7 @@ namespace DAO.Model
         public string Message { get; set; }
         public string Status { get; set; }  // 'pending', 'accepted', 'rejected'
         public DateTime AppliedAt { get; set; }
+        public int TypeJobPost {  get; set; }
 
         // Navigation properties
         public JobPost JobPost { get; set; }

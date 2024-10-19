@@ -6,6 +6,8 @@ using System.Text;
 using System;
 using EXE201_HOMIE.Configuration.CORS;
 using DAO.Model.Context;
+using Services.Services;
+using EXE201_HOMIE.Hubs;
 
 namespace EXE201_HOMIE
 {
@@ -105,8 +107,12 @@ namespace EXE201_HOMIE
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            /*            app.MapControllers();*/
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            app.MapHub<ChatHub>("/chathub");
 
             app.Run();
         }

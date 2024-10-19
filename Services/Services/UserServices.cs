@@ -44,10 +44,19 @@ namespace Services.Services
                         return response;
                     }
                     var createUser = _mapper.Map<User>(user);
-                    createUser.AvatarUrl = "c";
+                    createUser.AvatarUrl = "https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg";
                     await _Userrepository.AddAsync(createUser);
                     await _Userrepository.SaveChangesAsync();
                     var result = await _Userrepository.Get().OrderBy(x => x.UserId).Include(x => x.Role).LastAsync();
+                    var ewallet = new EWallet
+                    {
+                        UserId = result.UserId,
+                        Balance = 0m,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
+                    };
+                    await _context.EWallets.AddAsync(ewallet);
+                    await _context.SaveChangesAsync();
                     var returned = _mapper.Map<UserResponseDTO>(result);
                     response.Data = returned;
                     response.statusCode = HttpStatusCode.OK;

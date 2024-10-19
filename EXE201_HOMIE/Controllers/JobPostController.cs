@@ -23,9 +23,9 @@ namespace EXE201_HOMIE.Controllers
             return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
         }
         [HttpGet("GetAll")]
-        public async Task<IActionResult> getAll()
+        public async Task<IActionResult> getAll(int? pageNumber, int? pageSize)
         {
-            var response = await _postServices.getAllJobPost();
+            var response = await _postServices.getAllJobPost(pageNumber, pageSize);
             return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
         }
         [HttpGet("getById/{id}")]

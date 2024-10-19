@@ -5,10 +5,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAO.Migrations
 {
-    public partial class updateDbv1 : Migration
+    public partial class UpdateJobPost : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
@@ -86,7 +100,8 @@ namespace DAO.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    JobType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,7 +206,8 @@ namespace DAO.Migrations
                     WorkerId = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppliedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AppliedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TypeJobPost = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -208,6 +224,32 @@ namespace DAO.Migrations
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CategoryJobPosts",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    JobPostId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryJobPosts", x => new { x.JobPostId, x.CategoryId });
+                    table.ForeignKey(
+                        name: "FK_CategoryJobPosts_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CategoryJobPosts_JobPosts_JobPostId",
+                        column: x => x.JobPostId,
+                        principalTable: "JobPosts",
+                        principalColumn: "JobId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -255,6 +297,11 @@ namespace DAO.Migrations
                 name: "IX_Applications_WorkerId",
                 table: "Applications",
                 column: "WorkerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryJobPosts_CategoryId",
+                table: "CategoryJobPosts",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EWallets_UserId",
@@ -320,6 +367,9 @@ namespace DAO.Migrations
                 name: "Applications");
 
             migrationBuilder.DropTable(
+                name: "CategoryJobPosts");
+
+            migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
@@ -330,6 +380,9 @@ namespace DAO.Migrations
 
             migrationBuilder.DropTable(
                 name: "TransactionHistories");
+
+            migrationBuilder.DropTable(
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "JobPosts");

@@ -25,6 +25,7 @@ namespace DAO.Model
         public decimal Price { get; set; }
         public string Status {  get; set; }
         public DateTime CreateDate { get; set; }
+        public int JobType {  get; set; } // 1 for User post, 2 for Employee Post
 
         public User Employer { get; set; }
         public ICollection<Application> Applications { get; set; }

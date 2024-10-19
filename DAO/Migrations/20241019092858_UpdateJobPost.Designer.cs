@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAO.Migrations
 {
     [DbContext(typeof(HomieContext))]
-    [Migration("20241005140123_UpdateDbV2")]
-    partial class UpdateDbV2
+    [Migration("20241019092858_UpdateJobPost")]
+    partial class UpdateJobPost
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,9 @@ namespace DAO.Migrations
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeJobPost")
+                        .HasColumnType("int");
 
                     b.Property<int>("WorkerId")
                         .HasColumnType("int");
@@ -147,6 +150,9 @@ namespace DAO.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("JobType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Location")
                         .IsRequired()

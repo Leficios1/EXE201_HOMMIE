@@ -13,5 +13,7 @@ namespace DAO.DTO.Reponse
         public HttpStatusCode statusCode { get; set; }
         public string Message { get; set; }
         public object? bonusData { get; set; }
+        public int? TotalItems {  get; set; }
+        public int? TotalPages {  get; set; }
     }
 }

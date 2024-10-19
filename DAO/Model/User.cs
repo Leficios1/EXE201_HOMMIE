@@ -36,7 +36,7 @@ namespace DAO.Model
         public bool Status { get; set; }
         public int RoleId { get; set; }
         public DateTime? CreatedAt { get; set; }
-
+        
         //Navigation
         public Role Role { get; set; }
         public Profiles Profiles { get; set; }

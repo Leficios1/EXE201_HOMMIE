@@ -11,15 +11,7 @@ namespace DAO.Model.Context
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Role>().HasData
-            (
-                new Role
-                {
-                    RoleId = 1,
-                    RoleName = "Admin"
-                }
-
-            );
+           
         }
     }
 }
