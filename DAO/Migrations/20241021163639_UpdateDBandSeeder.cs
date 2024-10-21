@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAO.Migrations
 {
-    public partial class UpdateJobPost : Migration
+    public partial class UpdateDBandSeeder : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -96,6 +96,8 @@ namespace DAO.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SquareMeters = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    NumberOfFloors = table.Column<int>(type: "int", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -286,6 +288,48 @@ namespace DAO.Migrations
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "Id", "CategoryName", "Price" },
+                values: new object[] { 1, "combo1", 100000m });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "RoleId", "RoleName" },
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "Customer" },
+                    { 3, "Employee" },
+                    { 4, "Staff" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "AvatarUrl", "CreatedAt", "DateOfBirth", "Email", "Gender", "Name", "Password", "Phone", "RoleId", "Status" },
+                values: new object[,]
+                {
+                    { 1, "https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg", new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7508), new DateTime(2002, 5, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "customer@gmail.com", "Male", "customer", "12345", "1234567890", 2, true },
+                    { 2, "https://example.com/avatar2.jpg", new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7511), new DateTime(1990, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "employer@gmail.com", "Female", "employer", "67890", "0987654321", 3, true },
+                    { 3, "https://example.com/avatar3.jpg", new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7512), new DateTime(1995, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "worker1@gmail.com", "Male", "worker1", "worker123", "1122334455", 4, true },
+                    { 4, "https://example.com/avatar4.jpg", new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7514), new DateTime(1988, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "worker2@gmail.com", "Female", "worker2", "worker456", "9988776655", 4, false },
+                    { 5, "https://example.com/avatar5.jpg", new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7515), new DateTime(1985, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@gmail.com", "Male", "admin", "admin789", "1231231234", 1, true },
+                    { 6, "https://example.com/avatar6.jpg", new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7516), new DateTime(2000, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "customer2@gmail.com", "Female", "customer2", "cust2345", "4567891230", 2, true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EWallets",
+                columns: new[] { "WalletId", "Balance", "CreatedAt", "UpdatedAt", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 0m, new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7543), new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7544), 1 },
+                    { 2, 0m, new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7546), new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7546), 2 },
+                    { 3, 0m, new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7547), new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7548), 3 },
+                    { 4, 0m, new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7549), new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7549), 4 },
+                    { 5, 0m, new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7550), new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7550), 5 },
+                    { 6, 0m, new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7552), new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7552), 6 }
                 });
 
             migrationBuilder.CreateIndex(

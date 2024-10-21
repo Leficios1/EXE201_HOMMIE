@@ -43,6 +43,12 @@ namespace Services.Services
                 var dataUser = await _context.Users.Where(x => x.UserId == post.UserId).SingleOrDefaultAsync();
                 if (dataUser.RoleId == 2)
                 {
+                    if (post.NumberOfFloors == null || post.SquareMeters == null)
+                    {
+                        result.statusCode = HttpStatusCode.BadRequest;
+                        result.Message = "SquareMeters and NumberOfFloors are required for Employers";
+                        return result;
+                    }
                     var wallet = await _context.EWallets.FirstOrDefaultAsync(w => w.UserId == post.UserId);
                     if (wallet == null)
                     {

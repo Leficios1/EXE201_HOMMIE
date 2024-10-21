@@ -77,6 +77,14 @@ namespace DAO.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryName = "combo1",
+                            Price = 100000m
+                        });
                 });
 
             modelBuilder.Entity("DAO.Model.CategoryJobPost", b =>
@@ -126,6 +134,56 @@ namespace DAO.Migrations
                         .IsUnique();
 
                     b.ToTable("EWallets");
+
+                    b.HasData(
+                        new
+                        {
+                            WalletId = 1,
+                            Balance = 0m,
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7543),
+                            UpdatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7544),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            WalletId = 2,
+                            Balance = 0m,
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7546),
+                            UpdatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7546),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            WalletId = 3,
+                            Balance = 0m,
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7547),
+                            UpdatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7548),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            WalletId = 4,
+                            Balance = 0m,
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7549),
+                            UpdatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7549),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            WalletId = 5,
+                            Balance = 0m,
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7550),
+                            UpdatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7550),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            WalletId = 6,
+                            Balance = 0m,
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7552),
+                            UpdatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7552),
+                            UserId = 6
+                        });
                 });
 
             modelBuilder.Entity("DAO.Model.JobPost", b =>
@@ -156,7 +214,13 @@ namespace DAO.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("NumberOfFloors")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("SquareMeters")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("StartDate")
@@ -295,6 +359,28 @@ namespace DAO.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            RoleName = "Customer"
+                        },
+                        new
+                        {
+                            RoleId = 3,
+                            RoleName = "Employee"
+                        },
+                        new
+                        {
+                            RoleId = 4,
+                            RoleName = "Staff"
+                        });
                 });
 
             modelBuilder.Entity("DAO.Model.TransactionHistory", b =>
@@ -387,6 +473,92 @@ namespace DAO.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            AvatarUrl = "https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg",
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7508),
+                            DateOfBirth = new DateTime(2002, 5, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "customer@gmail.com",
+                            Gender = "Male",
+                            Name = "customer",
+                            Password = "12345",
+                            Phone = "1234567890",
+                            RoleId = 2,
+                            Status = true
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            AvatarUrl = "https://example.com/avatar2.jpg",
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7511),
+                            DateOfBirth = new DateTime(1990, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "employer@gmail.com",
+                            Gender = "Female",
+                            Name = "employer",
+                            Password = "67890",
+                            Phone = "0987654321",
+                            RoleId = 3,
+                            Status = true
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            AvatarUrl = "https://example.com/avatar3.jpg",
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7512),
+                            DateOfBirth = new DateTime(1995, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "worker1@gmail.com",
+                            Gender = "Male",
+                            Name = "worker1",
+                            Password = "worker123",
+                            Phone = "1122334455",
+                            RoleId = 4,
+                            Status = true
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            AvatarUrl = "https://example.com/avatar4.jpg",
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7514),
+                            DateOfBirth = new DateTime(1988, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "worker2@gmail.com",
+                            Gender = "Female",
+                            Name = "worker2",
+                            Password = "worker456",
+                            Phone = "9988776655",
+                            RoleId = 4,
+                            Status = false
+                        },
+                        new
+                        {
+                            UserId = 5,
+                            AvatarUrl = "https://example.com/avatar5.jpg",
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7515),
+                            DateOfBirth = new DateTime(1985, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@gmail.com",
+                            Gender = "Male",
+                            Name = "admin",
+                            Password = "admin789",
+                            Phone = "1231231234",
+                            RoleId = 1,
+                            Status = true
+                        },
+                        new
+                        {
+                            UserId = 6,
+                            AvatarUrl = "https://example.com/avatar6.jpg",
+                            CreatedAt = new DateTime(2024, 10, 21, 16, 36, 38, 929, DateTimeKind.Utc).AddTicks(7516),
+                            DateOfBirth = new DateTime(2000, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "customer2@gmail.com",
+                            Gender = "Female",
+                            Name = "customer2",
+                            Password = "cust2345",
+                            Phone = "4567891230",
+                            RoleId = 2,
+                            Status = true
+                        });
                 });
 
             modelBuilder.Entity("DAO.Model.Application", b =>
