@@ -23,6 +23,19 @@ namespace EXE201_HOMIE.Controllers
             var response = await _profilesService.getProfile(userId);
             return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
         }
+        [HttpGet("getProfilesIfHaveApplication/{applicationId}")]
+        public async Task<IActionResult> getProfilesIfHaveApplication([FromRoute] int applicationId)
+        {
+            var response = await _profilesService.getProfileUserifHaveApplication(applicationId);
+            return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
+        } 
+        
+        [HttpGet("checkFirstLogin/{userId}")]
+        public async Task<IActionResult> checkFirstLogin([FromRoute] int userId)
+        {
+            var response = await _profilesService.isFirstLogin(userId);
+            return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
+        }
 
         [HttpPost("CreateProfiles")]
         public async Task<IActionResult> CreateProfiles([FromBody] ProfilesRequestDTO dto )

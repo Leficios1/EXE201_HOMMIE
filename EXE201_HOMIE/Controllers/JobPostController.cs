@@ -23,15 +23,21 @@ namespace EXE201_HOMIE.Controllers
             return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
         }
         [HttpGet("GetAll")]
-        public async Task<IActionResult> getAll(int? pageNumber, int? pageSize)
+        public async Task<IActionResult> getAll(int? pageNumber, int? pageSize, string? filter, string? OrderBy)
         {
-            var response = await _postServices.getAllJobPost(pageNumber, pageSize);
-            return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
+            var response = await _postServices.getAllJobPost(pageNumber, pageSize, filter, OrderBy);
+            return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message, TolalItems = response.TotalItems, TotalPage = response.TotalPages  });
         }
         [HttpGet("getById/{id}")]
         public async Task<IActionResult> getById([FromRoute] int id)
         {
             var response = await _postServices.GetJobPost(id);
+            return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
+        }
+        [HttpGet("getByUserId/{userid}")]
+        public async Task<IActionResult> getByUserId([FromRoute] int userid)
+        {
+            var response = await _postServices.GetJobPostByUserId(userid);
             return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
         }
 

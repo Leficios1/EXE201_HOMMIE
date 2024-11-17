@@ -17,6 +17,28 @@ namespace EXE201_HOMIE.Controllers
             _applicationServices = applicationServices;
         }
 
+        [HttpGet("getAll")]
+        public async Task<IActionResult> getAll()
+        {
+            var response = await _applicationServices.getAll();
+            return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
+        }
+
+        [HttpGet("getbyId/{id}")]
+        public async Task<IActionResult> getByid(int id)
+        {
+            var response = await _applicationServices.getById(id);
+            return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
+        }
+
+        [HttpGet("getbyUserId/{userId}")]
+        public async Task<IActionResult> getByUserId([FromRoute] int userId)
+        {
+            var response = await _applicationServices.getByUserId(userId);
+            return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
+        }
+
+
         [HttpPost("CreateApplication")]
         public async Task<IActionResult> createApplication([FromBody] ApplicationRequestDTO dto)
         {

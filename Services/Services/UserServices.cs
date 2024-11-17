@@ -186,6 +186,7 @@ namespace Services.Services
                 existedUser.Name = user.Name;
                 existedUser.Phone = user.Phone;
                 existedUser.Email = user.Email;
+                //existedUser.RoleId = user.RoleId;
                 _Userrepository.Update(existedUser);
                 await _Userrepository.SaveChangesAsync();
                 var map = _mapper.Map<UserResponseDTO>(existedUser);

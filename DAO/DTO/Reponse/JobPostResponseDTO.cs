@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAO.DTO.Request
+namespace DAO.DTO.Reponse
 {
-    public class JobPostRequestDTO
+     public class JobPostResponseDTO
     {
-        //Thêm chiều rộng căn nhà và số tầng nếu User post bài
-        public int UserId { get; set; }
+        public int JobId { get; set; }
+        public int EmployerId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
@@ -17,14 +18,14 @@ namespace DAO.DTO.Request
         public int? NumberOfFloors { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        //public decimal Price { get; set; }
-        public string Status { get; set; } //// 'open', 'in_progress', 'completed', 'cancelled'
+        public decimal Price { get; set; }
+        public string Status { get; set; }
         public DateTime CreateDate { get; set; }
-        public List<JobPostCategory> Categorys { get; set; }
-
+        public int JobType { get; set; }
+        public List<CategoryJobpost> CategoryJobPost { get; set; }
     }
-    public class JobPostCategory
+    public class CategoryJobpost
     {
-        public int CategoryId { get; set; }
+        public int CategoriesId { get; set; }
     }
 }

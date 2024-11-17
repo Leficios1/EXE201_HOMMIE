@@ -38,8 +38,18 @@ namespace Services.Services
                 var data = _mapper.Map<Application>(dto);
                 data.Status = "Pending";
                 data.AppliedAt = DateTime.UtcNow;
+                var jobPostData = await _context.JobPosts.Where(x => x.JobId == dto.JobId).SingleOrDefaultAsync();
+                if (jobPostData == null)
+                {
+                    result.Data = false;
+                    result.statusCode = HttpStatusCode.NotFound;
+                    result.Message = "Not found Job Post";
+                    return result;
+                }
+                jobPostData.Status = "Application";
                 await _applicationRepository.AddAsync(data);
-                await _applicationRepository.SaveChangesAsync();
+                _context.Update(jobPostData);
+                await _context.SaveChangesAsync();
                 result.Data = true;
                 result.statusCode = HttpStatusCode.OK;
                 result.Message = "Successful";
@@ -69,11 +79,12 @@ namespace Services.Services
                 }
                 data.Status = status;
                 var jobPost = await _context.JobPosts.Where(x => x.JobId == data.JobId).SingleOrDefaultAsync();
-                var myAccount = _context.Users.Where(x => x.RoleId == 1).SingleOrDefaultAsync();
+                var myAccount = await _context.Users.Where(x => x.RoleId == 1).SingleOrDefaultAsync();
                 if (data.Status.ToUpper().Equals("Done".ToUpper()))
                 {
                     if (jobPost != null)
                     {
+                        jobPost.Status = data.Status;
                         if (jobPost.JobType == 1) // For User Post
                         {
                             var eWallet = await _context.EWallets.Where(x => x.UserId == data.WorkerId).SingleOrDefaultAsync();
@@ -94,7 +105,7 @@ namespace Services.Services
                                 };
                                 await _context.TransactionHistories.AddAsync(transactionHistory);
                             }
-                            var myWallet = await _context.EWallets.Where(x => x.UserId == myAccount.Id).SingleOrDefaultAsync();
+                            var myWallet = await _context.EWallets.Where(x => x.UserId == myAccount.UserId).SingleOrDefaultAsync();
                             if (myWallet != null)
                             {
                                 myWallet.Balance += jobPost.Price * 0.15m;
@@ -132,7 +143,7 @@ namespace Services.Services
                                     WalletId = eWallet.WalletId,
                                     UserId = eWallet.UserId,
                                     TransactionType = "Paid money",
-                                    Amount = jobPost.Price + (jobPost.Price * 0.15m),
+                                    Amount = -(jobPost.Price + (jobPost.Price * 0.15m)),
                                     TransactionDate = DateTime.UtcNow,
                                     Description = "Money for job post"
                                 };
@@ -160,7 +171,7 @@ namespace Services.Services
                                 await _context.SaveChangesAsync();
                             }
                             //My Wallet
-                            var myWallet = await _context.EWallets.Where(x => x.UserId == myAccount.Id).SingleOrDefaultAsync();
+                            var myWallet = await _context.EWallets.Where(x => x.UserId == myAccount.UserId).SingleOrDefaultAsync();
                             if (myWallet != null)
                             {
                                 myWallet.Balance += jobPost.Price * 0.15m;
@@ -184,12 +195,14 @@ namespace Services.Services
                             result.statusCode = HttpStatusCode.OK;
                             result.Message = "Successful";
                         }
+
                     }
                 }
                 else if (data.Status.ToUpper().Equals("Cancel".ToUpper()))
                 {
                     if (jobPost != null)
                     {
+                        jobPost.Status = data.Status;
                         if (jobPost.JobType == 1) // Add money for User if this post cancel
                         {
                             var userWallet = await _context.EWallets.Where(x => x.UserId == jobPost.EmployerId).SingleOrDefaultAsync();
@@ -217,12 +230,55 @@ namespace Services.Services
                         }
                     }
                 }
+                _context.Update(jobPost!);
+                await _context.SaveChangesAsync();
                 transaction.Commit();
                 return result;
             }
             catch (Exception ex)
             {
                 transaction.Rollback();
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<StatusResponse<List<Application>>> getAll()
+        {
+            try
+            {
+                var result = new StatusResponse<List<Application>>();
+                var data = await _applicationRepository.Get().ToListAsync();
+                result.Data = data;
+                result.statusCode = HttpStatusCode.OK;
+                result.Message = "Successful";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<StatusResponse<Application>> getById(int id)
+        {
+            var result = new StatusResponse<Application>();
+            var data = await _applicationRepository.GetById(id);
+            result.Data = data;
+            result.statusCode = HttpStatusCode.OK;
+            result.Message = "Successful";
+            return result;
+        }
+
+        public async Task<StatusResponse<List<Application>>> getByUserId(int userId)
+        {
+            try
+            {
+                var result = new StatusResponse<List<Application>>();
+                var data = await _applicationRepository.Get().Where(x => x.WorkerId == userId).ToListAsync();
+                result.Data = data;
+                result.statusCode = HttpStatusCode.OK;
+                result.Message = "Successful";
+                return result;
+            }catch (Exception ex)
+            {
                 throw new Exception(ex.Message);
             }
         }

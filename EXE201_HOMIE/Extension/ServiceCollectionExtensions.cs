@@ -10,16 +10,12 @@ namespace EXE201_HOMIE.Extension
     {
         public static IServiceCollection Register(this IServiceCollection services)
         {
-            services.AddControllers();
             services.AddSignalR();
-            services.AddEndpointsApiExplorer();
 
             //Register AutoMapper
             services.AddAutoMapper(typeof(MappingEntites));
 
             
-
-
             //Register Repository here
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             //Register Service here
@@ -30,6 +26,9 @@ namespace EXE201_HOMIE.Extension
             services.AddScoped<IApplication, ApplicationServices>();
             services.AddScoped<IAuthServices, AuthServices>();
             services.AddScoped<ICategoryServices, CategoryServices>();
+            services.AddScoped<ITransactionHistory, TransactionHistoryServices>();
+            services.AddScoped<IDashBoardServices, DashBoardServices>();
+            services.AddScoped<IReviewServices, ReviewServices>();
 
             return services;
         }

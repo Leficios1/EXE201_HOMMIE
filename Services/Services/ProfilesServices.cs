@@ -41,6 +41,14 @@ namespace Services.Services
                     result.Message = "DTO null";
                     return result;
                 }
+                var userData = await _context.Users.Where(x => x.UserId == dto.UserId).SingleOrDefaultAsync();
+                if (userData.RoleId != 3)
+                {
+                    result.Data = null;
+                    result.statusCode = System.Net.HttpStatusCode.BadRequest;
+                    result.Message = "This user is not Employee";
+                    return result;
+                }
                 var data = await _profileRepository.Get().Where(x => x.UserId == dto.UserId).SingleOrDefaultAsync();
                 if (data != null)
                 {
@@ -50,6 +58,7 @@ namespace Services.Services
                     return result;
                 }
                 var mapper = _mapper.Map<Profiles>(dto);
+                mapper.RatingAvg = 5;
                 await _profileRepository.AddAsync(mapper);
                 await _profileRepository.SaveChangesAsync();
                 transaction.Commit();
@@ -79,6 +88,78 @@ namespace Services.Services
                 result.statusCode = System.Net.HttpStatusCode.OK;
                 result.Message = "Succesful";
                 return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<StatusResponse<Profiles>> getProfileUserifHaveApplication(int applicationId)
+        {
+            var result = new StatusResponse<Profiles>();
+            try
+            {
+                var data = await _context.Applications.FindAsync(applicationId);
+                if (data == null)
+                {
+                    result.statusCode = System.Net.HttpStatusCode.NotFound;
+                    result.Message = "not found Application";
+                    return result;
+                }
+                else
+                {
+                    var dataUser = await _context.Users.FindAsync(data.WorkerId);
+                    if (dataUser == null)
+                    {
+                        result.statusCode = System.Net.HttpStatusCode.NotFound;
+                        result.Message = "not found User";
+                        return result;
+                    }
+                    else if (dataUser.RoleId == 3)
+                    {
+                        var dataProfile = await _context.Profiles.Where(x => x.UserId == dataUser.UserId).SingleOrDefaultAsync();
+                        result.Data = dataProfile;
+                        result.statusCode = System.Net.HttpStatusCode.OK;
+                        result.Message = "Succesful";
+                        return result;
+                    }
+                    else
+                    {
+                        result.statusCode = System.Net.HttpStatusCode.Forbidden;
+                        result.Message = "You don't have Permission to see User Profile";
+                        return result;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.statusCode = System.Net.HttpStatusCode.InternalServerError;
+                result.Message = ex.Message;
+                return result;
+            }
+        }
+
+        public async Task<StatusResponse<bool>> isFirstLogin(int userId)
+        {
+            try
+            {
+                var result = new StatusResponse<bool>();
+                var data = await _context.Profiles.Where(x => x.UserId == userId).SingleOrDefaultAsync();
+                if (data == null)
+                {
+                    result.Data = false;
+                    result.statusCode = System.Net.HttpStatusCode.OK;
+                    result.Message = "This is first time Employee login";
+                    return result;
+                }
+                else
+                {
+                    result.Data = true;
+                    result.statusCode = System.Net.HttpStatusCode.OK;
+                    result.Message = "No need create profiles";
+                    return result;
+                }
             }
             catch (Exception ex)
             {

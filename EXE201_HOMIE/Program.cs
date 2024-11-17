@@ -24,13 +24,32 @@ namespace EXE201_HOMIE
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddCors(o => o.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+            //AddCORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
+            
             builder.Services.AddDbContext<HomieContext>(options =>
             {
                 //options.UseSqlServer("data source=pacific1.database.windows.net;initial catalog=epplus;user id=sa1;password=be12345@;trustservercertificate=true;multipleactiveresultsets=true;");
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Homie"));
             });
             builder.Services.AddAutoMapper(typeof(Program));
+
+            //Add JSON 
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.MaxDepth = 256;
+            });
 
             //Add Authencation
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -82,13 +101,9 @@ namespace EXE201_HOMIE
             var app = builder.Build();
 
             /* app.UseMiddleware<GlobalExceptionMiddleware>();*/
+            app.UseCors("AllowAll");
             app.ConfigureCors(builder.Configuration);
-
-
-
             app.UseDeveloperExceptionPage();
-
-
             app.UseSwagger();
 
             app.UseSwaggerUI(options =>
@@ -98,7 +113,6 @@ namespace EXE201_HOMIE
                 options.RoutePrefix = string.Empty;
 
             });
-
 
             app.UseHttpsRedirection();
 

@@ -1,5 +1,6 @@
 ﻿using DAO.DTO.Reponse;
 using DAO.DTO.Request;
+using DAO.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,8 @@ namespace Services.Services.Interface
     {
         Task<StatusResponse<bool>> applicationJobPost(ApplicationRequestDTO dto);
         Task<StatusResponse<bool>> changeStatus(int id, string status);
+        Task<StatusResponse<List<Application>>> getAll();
+        Task<StatusResponse<Application>> getById(int id);
+        Task<StatusResponse<List<Application>>> getByUserId(int userId);
     }
 }

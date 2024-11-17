@@ -14,5 +14,8 @@ namespace Services.Services.Interface
         Task<StatusResponse<Profiles>> CreateProfiles(ProfilesRequestDTO dto);
         Task<StatusResponse<Profiles>> UpdateProfiles(int id, ProfilesRequestDTO dto);
         Task<StatusResponse<Profiles>> getProfile(int Userid);
+        Task<StatusResponse<bool>> isFirstLogin(int userId);
+        Task<StatusResponse<Profiles>> getProfileUserifHaveApplication(int applicationId);
+
     }
 }

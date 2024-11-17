@@ -4,11 +4,13 @@ using DAO.DTO.Request;
 using DAO.Model;
 using DAO.Model.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Services.Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,13 +28,25 @@ namespace Services.Services
             _mapper = mapper;
         }
 
-        public async Task<StatusResponse<JobPost>> CreateJobPost(JobPostRequestDTO post)
+        public async Task<StatusResponse<JobPostResponseDTO>> CreateJobPost(JobPostRequestDTO post)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                var result = new StatusResponse<JobPost>();
-                var postingFee = post.Price + (post.Price * 0.15m);
+                var result = new StatusResponse<JobPostResponseDTO>();
+                decimal price = 0;
+                if (post.Categorys != null && post.Categorys.Any())
+                {
+                    foreach (var category in post.Categorys)
+                    {
+                        var data = await _context.Category.Where(x => x.Id == category.CategoryId).SingleOrDefaultAsync();
+                        if (data != null)
+                        {
+                            price += data.Price;
+                        }
+                    }
+                }
+                var postingFee = price + (price * 0.15m);
                 if (post == null)
                 {
                     result.statusCode = HttpStatusCode.BadRequest;
@@ -46,7 +60,7 @@ namespace Services.Services
                     if (post.NumberOfFloors == null || post.SquareMeters == null)
                     {
                         result.statusCode = HttpStatusCode.BadRequest;
-                        result.Message = "SquareMeters and NumberOfFloors are required for Employers";
+                        result.Message = "SquareMeters and NumberOfFloors are required for Customer";
                         return result;
                     }
                     var wallet = await _context.EWallets.FirstOrDefaultAsync(w => w.UserId == post.UserId);
@@ -73,7 +87,7 @@ namespace Services.Services
                         WalletId = wallet.WalletId,
                         UserId = post.UserId,
                         TransactionType = "Payment",
-                        Amount = postingFee,
+                        Amount = -postingFee,
                         TransactionDate = DateTime.UtcNow,
                         Description = "Job post fee for " + post.Title
                     };
@@ -82,6 +96,7 @@ namespace Services.Services
                     // Tạo JobPost
                     var jobPost = _mapper.Map<JobPost>(post);
                     jobPost.Status = "Waiting";
+                    jobPost.Price = price;
                     jobPost.JobType = 1;
                     await _context.JobPosts.AddAsync(jobPost);
                     await _context.SaveChangesAsync();
@@ -100,7 +115,8 @@ namespace Services.Services
                         }
                     }
                     await _context.SaveChangesAsync();
-                    result.Data = jobPost;
+                    var mapper = _mapper.Map<JobPostResponseDTO>(jobPost);
+                    result.Data = mapper;
                     result.statusCode = HttpStatusCode.OK;
                     result.Message = "Job post created successfully.";
                 }
@@ -108,6 +124,7 @@ namespace Services.Services
                 {
                     var jobPost = _mapper.Map<JobPost>(post);
                     jobPost.Status = "Waiting";
+                    jobPost.Price = price;
                     jobPost.JobType = 2;
                     await _context.JobPosts.AddAsync(jobPost);
                     await _context.SaveChangesAsync();
@@ -123,8 +140,16 @@ namespace Services.Services
                             await _context.CategoryJobPosts.AddAsync(jobPostCategory);
                         }
                     }
+                    else
+                    {
+                        result.Data = null;
+                        result.statusCode = HttpStatusCode.BadRequest;
+                        result.Message = "You don't have permission to create JobPost";
+                        return result;
+                    }
                     await _context.SaveChangesAsync();
-                    result.Data = jobPost;
+                    var mapper = _mapper.Map<JobPostResponseDTO>(jobPost);
+                    result.Data = mapper;
                     result.statusCode = HttpStatusCode.OK;
                     result.Message = "Job post created successfully.";
                 }
@@ -146,31 +171,53 @@ namespace Services.Services
         }
 
 
-        public Task<StatusResponse<JobPost>> DeleteJobPost(int id)
+        public Task<StatusResponse<JobPostResponseDTO>> DeleteJobPost(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<StatusResponse<List<JobPost>>> getAllJobPost(int? pageNumber, int? pageSize)
+        public async Task<StatusResponse<List<JobPostResponseDTO>>> getAllJobPost(int? pageNumber, int? pageSize, string? filter, string? OrderBy)
         {
             try
             {
-                var result = new StatusResponse<List<JobPost>>();
+                var result = new StatusResponse<List<JobPostResponseDTO>>();
 
                 int currentPage = pageNumber ?? 1;
                 int currentPageSize = pageSize ?? 10;
-                var data = await _context.JobPosts
-                                        .Include(x => x.CategoryJobPosts)
-                                        .ThenInclude(jpd => jpd.Category)
-                                        .Skip((currentPage - 1) * currentPageSize)
-                                        .Take(currentPageSize)
-                                        .ToListAsync();
 
-                var totalItems = await _context.JobPosts.CountAsync();
+                IQueryable<JobPost> query = _context.JobPosts.Include(x => x.CategoryJobPosts).ThenInclude(j => j.Category);
 
-                if (data != null && data.Count > 0)
+                if (!string.IsNullOrEmpty(filter))
                 {
-                    result.Data = data;
+                    var propertyInfo = typeof(JobPost).GetProperty(filter,
+                        BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+
+                    if (propertyInfo != null)
+                    {
+                        query = OrderBy?.ToLower() == "asc"
+                            ? query.OrderBy(e => EF.Property<object>(e, propertyInfo.Name))
+                            : query.OrderByDescending(e => EF.Property<object>(e, propertyInfo.Name));
+                    }
+                    else
+                    {
+                        query = query.OrderByDescending(jp => jp.JobId);
+                    }
+                }
+                else
+                {
+                    query = query.OrderByDescending(jp => jp.JobId);
+                }
+
+                var data = await query.Skip((currentPage - 1) * currentPageSize)
+                              .Take(currentPageSize).ToListAsync();
+
+                var mapper = _mapper.Map<List<JobPostResponseDTO>>(data);
+
+                var totalItems = await query.CountAsync();
+
+                if (data != null)
+                {
+                    result.Data = mapper;
                     result.statusCode = HttpStatusCode.OK;
                     result.Message = "Successfull";
                     result.TotalItems = totalItems;
@@ -190,18 +237,19 @@ namespace Services.Services
             }
         }
 
-        public async Task<StatusResponse<JobPost>> GetJobPost(int id)
+        public async Task<StatusResponse<JobPostResponseDTO>> GetJobPost(int id)
         {
             try
             {
-                var result = new StatusResponse<JobPost>();
+                var result = new StatusResponse<JobPostResponseDTO>();
                 var data = await _context.JobPosts.
                                 Include(x => x.CategoryJobPosts).
                                 ThenInclude(jpd => jpd.Category).
                                 Where(x => x.JobId == id).SingleOrDefaultAsync();
                 if (data != null)
                 {
-                    result.Data = data;
+                    var mapper = _mapper.Map<JobPostResponseDTO>(data);
+                    result.Data = mapper;
                     result.statusCode = HttpStatusCode.OK;
                     result.Message = "Successful";
                 }
@@ -213,11 +261,28 @@ namespace Services.Services
             }
         }
 
-        public async Task<StatusResponse<List<JobPost>>> searchJobPostByCategory(int? pageNumber, int? pageSize, string category)
+        public async Task<StatusResponse<List<JobPostResponseDTO>>> GetJobPostByUserId(int userId)
+        {
+            var response = new StatusResponse<List<JobPostResponseDTO>>();
+            var data = await _context.JobPosts.Where( x => x.EmployerId == userId).Include(x => x.CategoryJobPosts).ThenInclude(j => j.Category).ToListAsync();
+            if (data == null)
+            {
+                response.statusCode = HttpStatusCode.NotFound;
+                response.Message = "Not found user";
+                return response;
+            }
+            var mapper = _mapper.Map<List<JobPostResponseDTO>>(data);
+            response.Data = mapper;
+            response.statusCode = HttpStatusCode.OK;
+            response.Message = "Succesful";
+            return response;
+        }
+
+        public async Task<StatusResponse<List<JobPostResponseDTO>>> searchJobPostByCategory(int? pageNumber, int? pageSize, string category)
         {
             try
             {
-                var result = new StatusResponse<List<JobPost>>();
+                var result = new StatusResponse<List<JobPostResponseDTO>>();
 
                 int currentPage = pageNumber ?? 1;
                 int currentPageSize = pageSize ?? 10;
@@ -236,7 +301,8 @@ namespace Services.Services
 
                 if (data != null && data.Count > 0)
                 {
-                    result.Data = data;
+                    var mapper = _mapper.Map<List<JobPostResponseDTO>>(data);
+                    result.Data = mapper;
                     result.statusCode = HttpStatusCode.OK;
                     result.Message = "Successfull";
                     result.TotalItems = totalItems;
@@ -257,7 +323,7 @@ namespace Services.Services
         }
 
 
-        public Task<StatusResponse<JobPost>> UpdateJobPost(JobPostRequestDTO post)
+        public Task<StatusResponse<JobPostResponseDTO>> UpdateJobPost(JobPostRequestDTO post)
         {
             throw new NotImplementedException();
         }
