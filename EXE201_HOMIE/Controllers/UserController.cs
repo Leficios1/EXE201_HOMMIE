@@ -48,5 +48,11 @@ namespace EXE201_HOMIE.Controllers
             var response = await _userService.UpdateUser(id, DTO);
             return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
         }
+        [HttpPut("updateStatus/{id}")]
+        public async Task<IActionResult> updateStatusUser([FromRoute] int id, bool status)
+        {
+            var response = await _userService.UpdateStatusUser(id, status);
+            return StatusCode((int)response.statusCode, new { data = response.Data, message = response.Message });
+        }
     }
 }

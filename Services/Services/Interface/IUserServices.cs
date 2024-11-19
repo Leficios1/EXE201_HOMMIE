@@ -15,6 +15,7 @@ namespace Services.Services.Interface
         public Task<StatusResponse<GetAllUserResponseDTO>> getAll(int? pageNumber, int? pageSize);
         public Task<StatusResponse<UserResponseDTO>> getUserById(int id);
         public Task<StatusResponse<UserResponseDTO>> UpdateUser(int userid, UserRequestDTO dto);
+        public Task<StatusResponse<bool>> UpdateStatusUser(int userId, bool status);
         public Task<StatusResponse<bool>> DeletedUser(int userid); 
     }
 }

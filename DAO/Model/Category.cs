@@ -14,6 +14,7 @@ namespace DAO.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string CategoryName { get; set; }
+        public string Hours { get; set; }
         public decimal Price {  get; set; }
 
         public ICollection<CategoryJobPost> CategoryJobPost { get; set; }
