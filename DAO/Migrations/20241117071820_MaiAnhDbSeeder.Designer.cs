@@ -4,6 +4,7 @@ using DAO.Model.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAO.Migrations
 {
     [DbContext(typeof(HomieContext))]
-    partial class HomieContextModelSnapshot : ModelSnapshot
+    [Migration("20241117071820_MaiAnhDbSeeder")]
+    partial class MaiAnhDbSeeder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +64,7 @@ namespace DAO.Migrations
                         new
                         {
                             Id = 1,
-                            AppliedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8127),
+                            AppliedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8702),
                             JobId = 1,
                             Message = "Tôi rất thích công việc này và muốn ứng tuyển.",
                             Status = "pending",
@@ -72,7 +74,7 @@ namespace DAO.Migrations
                         new
                         {
                             Id = 2,
-                            AppliedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8129),
+                            AppliedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8704),
                             JobId = 2,
                             Message = "Tôi có kinh nghiệm trong lĩnh vực giặt ủi.",
                             Status = "accepted",
@@ -82,7 +84,7 @@ namespace DAO.Migrations
                         new
                         {
                             Id = 3,
-                            AppliedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8130),
+                            AppliedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8705),
                             JobId = 3,
                             Message = "Tôi có nhiều kinh nghiệm chăm sóc thú cưng.",
                             Status = "rejected",
@@ -92,7 +94,7 @@ namespace DAO.Migrations
                         new
                         {
                             Id = 4,
-                            AppliedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8131),
+                            AppliedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8706),
                             JobId = 4,
                             Message = "Tôi sẵn sàng làm việc ngay.",
                             Status = "pending",
@@ -102,7 +104,7 @@ namespace DAO.Migrations
                         new
                         {
                             Id = 5,
-                            AppliedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8131),
+                            AppliedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8707),
                             JobId = 5,
                             Message = "Tôi rất muốn tham gia vào dự án này.",
                             Status = "pending",
@@ -123,10 +125,6 @@ namespace DAO.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Hours")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -139,35 +137,30 @@ namespace DAO.Migrations
                         {
                             Id = 1,
                             CategoryName = "Combo 1: Lau nhà, quét nhà",
-                            Hours = "1-2h",
                             Price = 80000m
                         },
                         new
                         {
                             Id = 2,
                             CategoryName = "Combo 2: Giặt đồ, ủi đồ",
-                            Hours = "1-2h",
                             Price = 80000m
                         },
                         new
                         {
                             Id = 3,
                             CategoryName = "Combo 3: Lau nhà, quét nhà, dọn bếp",
-                            Hours = "1-2h",
                             Price = 100000m
                         },
                         new
                         {
                             Id = 4,
                             CategoryName = "Combo 4: Chăm sóc thú cưng (ăn uống, vệ sinh, tắm rửa)",
-                            Hours = "1-2h",
                             Price = 100000m
                         },
                         new
                         {
                             Id = 5,
                             CategoryName = "Combo 5: Tổng hợp (full option trên)",
-                            Hours = "2-3h",
                             Price = 200000m
                         });
                 });
@@ -257,73 +250,41 @@ namespace DAO.Migrations
                         {
                             WalletId = 1,
                             Balance = 1000000.00m,
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8103),
-                            UpdatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8104),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8653),
+                            UpdatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8654),
                             UserId = 1
                         },
                         new
                         {
                             WalletId = 2,
                             Balance = 500000.00m,
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8105),
-                            UpdatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8106),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8681),
+                            UpdatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8681),
                             UserId = 2
                         },
                         new
                         {
                             WalletId = 3,
                             Balance = 750000.00m,
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8107),
-                            UpdatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8107),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8683),
+                            UpdatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8683),
                             UserId = 3
                         },
                         new
                         {
                             WalletId = 4,
                             Balance = 250000.00m,
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8109),
-                            UpdatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8109),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8684),
+                            UpdatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8685),
                             UserId = 4
                         },
                         new
                         {
                             WalletId = 5,
                             Balance = 300000.00m,
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8110),
-                            UpdatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8110),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8686),
+                            UpdatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8686),
                             UserId = 5
-                        },
-                        new
-                        {
-                            WalletId = 6,
-                            Balance = 300000.00m,
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8112),
-                            UpdatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8112),
-                            UserId = 6
-                        },
-                        new
-                        {
-                            WalletId = 7,
-                            Balance = 300000.00m,
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8113),
-                            UpdatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8113),
-                            UserId = 7
-                        },
-                        new
-                        {
-                            WalletId = 8,
-                            Balance = 300000.00m,
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8114),
-                            UpdatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8115),
-                            UserId = 8
-                        },
-                        new
-                        {
-                            WalletId = 9,
-                            Balance = 300000.00m,
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8116),
-                            UpdatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8116),
-                            UserId = 9
                         });
                 });
 
@@ -385,7 +346,7 @@ namespace DAO.Migrations
                         new
                         {
                             JobId = 1,
-                            CreateDate = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8068),
+                            CreateDate = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8616),
                             Description = "Cần tìm nhân viên lau dọn văn phòng 2 lần mỗi tuần.",
                             EmployerId = 1,
                             EndDate = new DateTime(2025, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -401,7 +362,7 @@ namespace DAO.Migrations
                         new
                         {
                             JobId = 2,
-                            CreateDate = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8071),
+                            CreateDate = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8619),
                             Description = "Tìm nhân viên giặt ủi đồ cho gia đình 2 lần mỗi tháng.",
                             EmployerId = 2,
                             EndDate = new DateTime(2025, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -417,7 +378,7 @@ namespace DAO.Migrations
                         new
                         {
                             JobId = 3,
-                            CreateDate = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8072),
+                            CreateDate = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8621),
                             Description = "Cần tìm người chăm sóc chó mèo trong thời gian đi công tác.",
                             EmployerId = 3,
                             EndDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -431,7 +392,7 @@ namespace DAO.Migrations
                         new
                         {
                             JobId = 4,
-                            CreateDate = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8074),
+                            CreateDate = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8623),
                             Description = "Cần tìm nhân viên dọn dẹp nhà cửa trước Tết.",
                             EmployerId = 4,
                             EndDate = new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -447,7 +408,7 @@ namespace DAO.Migrations
                         new
                         {
                             JobId = 5,
-                            CreateDate = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8076),
+                            CreateDate = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8625),
                             Description = "Cần nhân viên tổng hợp dịch vụ dọn dẹp và giặt ủi cho một căn hộ lớn.",
                             EmployerId = 5,
                             EndDate = new DateTime(2025, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -498,7 +459,7 @@ namespace DAO.Migrations
                             Content = "Chào John, bạn có thể giúp tôi một việc không?",
                             ReceiverId = 2,
                             SenderId = 1,
-                            SentAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8154)
+                            SentAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8731)
                         },
                         new
                         {
@@ -506,7 +467,7 @@ namespace DAO.Migrations
                             Content = "Chào Admin, tôi sẵn sàng giúp đỡ!",
                             ReceiverId = 1,
                             SenderId = 2,
-                            SentAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8155)
+                            SentAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8732)
                         },
                         new
                         {
@@ -514,7 +475,7 @@ namespace DAO.Migrations
                             Content = "Alice, bạn có biết cách làm việc này không?",
                             ReceiverId = 4,
                             SenderId = 3,
-                            SentAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8156)
+                            SentAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8733)
                         },
                         new
                         {
@@ -522,7 +483,7 @@ namespace DAO.Migrations
                             Content = "Vâng, tôi có thể giúp bạn với điều đó.",
                             ReceiverId = 3,
                             SenderId = 4,
-                            SentAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8157)
+                            SentAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8734)
                         },
                         new
                         {
@@ -530,7 +491,7 @@ namespace DAO.Migrations
                             Content = "Admin, tôi cần thông tin về dự án mới.",
                             ReceiverId = 1,
                             SenderId = 5,
-                            SentAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8157)
+                            SentAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8734)
                         });
                 });
 
@@ -577,7 +538,7 @@ namespace DAO.Migrations
                             Experience = "5 năm kinh nghiệm trong việc làm giúp việc tại gia đình và văn phòng.",
                             RatingAvg = 4.5m,
                             Skills = "Nấu ăn, Giặt giũ, Lau nhà, Dọn dẹp, Chăm sóc thú cưng",
-                            UserId = 6
+                            UserId = 2
                         },
                         new
                         {
@@ -597,7 +558,7 @@ namespace DAO.Migrations
                             Experience = "6 năm kinh nghiệm giúp việc cho nhiều gia đình, bao gồm việc chăm sóc thú cưng.",
                             RatingAvg = 4.6m,
                             Skills = "Giặt giũ, Lau nhà, Dọn dẹp, Nấu ăn, Chăm sóc thú cưng",
-                            UserId = 7
+                            UserId = 4
                         },
                         new
                         {
@@ -607,7 +568,7 @@ namespace DAO.Migrations
                             Experience = "3 năm làm việc tại nhiều gia đình với mức độ hài lòng cao từ khách hàng.",
                             RatingAvg = 4.2m,
                             Skills = "Dọn dẹp, Giặt giũ, Nấu ăn, Chăm sóc nhà cửa, Quản lý chi tiêu",
-                            UserId = 8
+                            UserId = 5
                         },
                         new
                         {
@@ -617,7 +578,7 @@ namespace DAO.Migrations
                             Experience = "7 năm kinh nghiệm trong lĩnh vực giúp việc tại nhà.",
                             RatingAvg = 4.8m,
                             Skills = "Nấu ăn, Lau nhà, Giặt giũ, Dọn dẹp, Chăm sóc người cao tuổi",
-                            UserId = 9
+                            UserId = 1
                         });
                 });
 
@@ -663,7 +624,7 @@ namespace DAO.Migrations
                         {
                             ReviewId = 1,
                             Comment = "Công việc này rất tốt, tôi rất hài lòng!",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8140),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8715),
                             JobId = 1,
                             Rating = 4.5m,
                             ReviewedId = 3,
@@ -673,7 +634,7 @@ namespace DAO.Migrations
                         {
                             ReviewId = 2,
                             Comment = "Alice làm việc rất chuyên nghiệp!",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8142),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8717),
                             JobId = 2,
                             Rating = 5.0m,
                             ReviewedId = 4,
@@ -683,7 +644,7 @@ namespace DAO.Migrations
                         {
                             ReviewId = 3,
                             Comment = "Bob cần cải thiện một số kỹ năng.",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8143),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8718),
                             JobId = 3,
                             Rating = 3.0m,
                             ReviewedId = 5,
@@ -693,7 +654,7 @@ namespace DAO.Migrations
                         {
                             ReviewId = 4,
                             Comment = "John đã làm tốt công việc!",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8143),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8719),
                             JobId = 4,
                             Rating = 4.0m,
                             ReviewedId = 2,
@@ -703,7 +664,7 @@ namespace DAO.Migrations
                         {
                             ReviewId = 5,
                             Comment = "Alice rất chăm chỉ và tận tâm!",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8144),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8719),
                             JobId = 5,
                             Rating = 4.8m,
                             ReviewedId = 4,
@@ -851,7 +812,7 @@ namespace DAO.Migrations
                         {
                             UserId = 1,
                             AvatarUrl = "https://example.com/avatar1.jpg",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(7602),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8575),
                             DateOfBirth = new DateTime(1985, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@example.com",
                             Gender = "Male",
@@ -865,7 +826,7 @@ namespace DAO.Migrations
                         {
                             UserId = 2,
                             AvatarUrl = "https://example.com/avatar2.jpg",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(7605),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8578),
                             DateOfBirth = new DateTime(1990, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "john.doe@example.com",
                             Gender = "Male",
@@ -879,7 +840,7 @@ namespace DAO.Migrations
                         {
                             UserId = 3,
                             AvatarUrl = "https://example.com/avatar3.jpg",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(7609),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8580),
                             DateOfBirth = new DateTime(1992, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "jane.smith@example.com",
                             Gender = "Female",
@@ -893,7 +854,7 @@ namespace DAO.Migrations
                         {
                             UserId = 4,
                             AvatarUrl = "https://example.com/avatar4.jpg",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(7610),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8581),
                             DateOfBirth = new DateTime(1988, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "alice.brown@example.com",
                             Gender = "Female",
@@ -907,7 +868,7 @@ namespace DAO.Migrations
                         {
                             UserId = 5,
                             AvatarUrl = "https://example.com/avatar5.jpg",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(7611),
+                            CreatedAt = new DateTime(2024, 11, 17, 7, 18, 20, 174, DateTimeKind.Utc).AddTicks(8582),
                             DateOfBirth = new DateTime(1987, 2, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "bob.johnson@example.com",
                             Gender = "Male",
@@ -915,62 +876,6 @@ namespace DAO.Migrations
                             Password = "password101",
                             Phone = "1231231234",
                             RoleId = 5,
-                            Status = true
-                        },
-                        new
-                        {
-                            UserId = 6,
-                            AvatarUrl = "https://example.com/avatar1.jpg",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(7612),
-                            DateOfBirth = new DateTime(1995, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "huong.nguyen@example.com",
-                            Gender = "Female",
-                            Name = "Nguyễn Thị Hương",
-                            Password = "password123",
-                            Phone = "0912345678",
-                            RoleId = 3,
-                            Status = true
-                        },
-                        new
-                        {
-                            UserId = 7,
-                            AvatarUrl = "https://example.com/avatar2.jpg",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8000),
-                            DateOfBirth = new DateTime(1993, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "mai.tran@example.com",
-                            Gender = "Female",
-                            Name = "Trần Thị Mai",
-                            Password = "password456",
-                            Phone = "0923456789",
-                            RoleId = 3,
-                            Status = true
-                        },
-                        new
-                        {
-                            UserId = 8,
-                            AvatarUrl = "https://example.com/avatar3.jpg",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8003),
-                            DateOfBirth = new DateTime(1997, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "lan.pham@example.com",
-                            Gender = "Female",
-                            Name = "Phạm Thị Lan",
-                            Password = "password789",
-                            Phone = "0934567890",
-                            RoleId = 3,
-                            Status = true
-                        },
-                        new
-                        {
-                            UserId = 9,
-                            AvatarUrl = "https://example.com/avatar4.jpg",
-                            CreatedAt = new DateTime(2024, 11, 17, 7, 46, 6, 657, DateTimeKind.Utc).AddTicks(8005),
-                            DateOfBirth = new DateTime(1994, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "anh.le@example.com",
-                            Gender = "Female",
-                            Name = "Lê Thị Ánh",
-                            Password = "passwordabc",
-                            Phone = "0945678901",
-                            RoleId = 3,
                             Status = true
                         });
                 });

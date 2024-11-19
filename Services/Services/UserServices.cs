@@ -202,5 +202,28 @@ namespace Services.Services
                 return response;
             }
         }
+        public async Task<StatusResponse<bool>> UpdateStatusUser(int userId, bool status)
+        {
+            var response = new StatusResponse<bool>();
+            var existedUser = await _Userrepository.Get().Where(x => x.UserId == userId).SingleOrDefaultAsync();
+            if (existedUser != null)
+            {
+                existedUser.Status = status;    
+                //existedUser.RoleId = user.RoleId;
+                _Userrepository.Update(existedUser);
+                await _Userrepository.SaveChangesAsync();
+                response.Data = true;
+                response.statusCode = HttpStatusCode.OK;
+                response.Message = "Update Successful";
+                return response;
+            }
+            else
+            {
+                response.Data = false;
+                response.statusCode = HttpStatusCode.NotFound;
+                response.Message = "Not Found user";
+                return response;
+            }
+        }
     }
 }

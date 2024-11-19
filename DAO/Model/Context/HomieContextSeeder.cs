@@ -52,7 +52,7 @@ namespace DAO.Model.Context
                     AvatarUrl = "https://example.com/avatar1.jpg",
                     Gender = "Male",
                     Status = true,
-                    RoleId = 1,  
+                    RoleId = 1,
                     CreatedAt = DateTime.UtcNow
                 },
                 new User
@@ -66,7 +66,7 @@ namespace DAO.Model.Context
                     AvatarUrl = "https://example.com/avatar2.jpg",
                     Gender = "Male",
                     Status = true,
-                    RoleId = 2, 
+                    RoleId = 2,
                     CreatedAt = DateTime.UtcNow
                 },
                 new User
@@ -80,7 +80,7 @@ namespace DAO.Model.Context
                     AvatarUrl = "https://example.com/avatar3.jpg",
                     Gender = "Female",
                     Status = true,
-                    RoleId = 3,  
+                    RoleId = 3,
                     CreatedAt = DateTime.UtcNow
                 },
                 new User
@@ -108,9 +108,65 @@ namespace DAO.Model.Context
                     AvatarUrl = "https://example.com/avatar5.jpg",
                     Gender = "Male",
                     Status = true,
-                    RoleId = 5,  
+                    RoleId = 5,
                     CreatedAt = DateTime.UtcNow
-                }
+                },
+                new User
+                {
+                    UserId = 6,
+                    Name = "Nguyễn Thị Hương",
+                    Email = "huong.nguyen@example.com",
+                    Phone = "0912345678",
+                    Password = "password123",
+                    DateOfBirth = new DateTime(1995, 8, 15),
+                    AvatarUrl = "https://example.com/avatar1.jpg",
+                    Gender = "Female",
+                    Status = true,
+                    RoleId = 3,
+                    CreatedAt = DateTime.UtcNow
+                },
+new User
+{
+    UserId = 7,
+    Name = "Trần Thị Mai",
+    Email = "mai.tran@example.com",
+    Phone = "0923456789",
+    Password = "password456",
+    DateOfBirth = new DateTime(1993, 4, 22),
+    AvatarUrl = "https://example.com/avatar2.jpg",
+    Gender = "Female",
+    Status = true,
+    RoleId = 3,
+    CreatedAt = DateTime.UtcNow
+},
+new User
+{
+    UserId = 8,
+    Name = "Phạm Thị Lan",
+    Email = "lan.pham@example.com",
+    Phone = "0934567890",
+    Password = "password789",
+    DateOfBirth = new DateTime(1997, 12, 3),
+    AvatarUrl = "https://example.com/avatar3.jpg",
+    Gender = "Female",
+    Status = true,
+    RoleId = 3,
+    CreatedAt = DateTime.UtcNow
+},
+new User
+{
+    UserId = 9,
+    Name = "Lê Thị Ánh",
+    Email = "anh.le@example.com",
+    Phone = "0945678901",
+    Password = "passwordabc",
+    DateOfBirth = new DateTime(1994, 6, 25),
+    AvatarUrl = "https://example.com/avatar4.jpg",
+    Gender = "Female",
+    Status = true,
+    RoleId = 3,
+    CreatedAt = DateTime.UtcNow
+}
             );
 
             modelBuilder.Entity<Category>().HasData(
@@ -118,31 +174,36 @@ namespace DAO.Model.Context
                 {
                     Id = 1,
                     CategoryName = "Combo 1: Lau nhà, quét nhà",
-                    Price = 80000 
+                    Hours = "1-2h",
+                    Price = 80000
                 },
                 new Category
                 {
                     Id = 2,
                     CategoryName = "Combo 2: Giặt đồ, ủi đồ",
-                    Price = 80000 
+                    Hours = "1-2h",
+                    Price = 80000
                 },
                 new Category
                 {
                     Id = 3,
                     CategoryName = "Combo 3: Lau nhà, quét nhà, dọn bếp",
-                    Price = 100000 
+                    Hours = "1-2h",
+                    Price = 100000
                 },
                 new Category
                 {
                     Id = 4,
                     CategoryName = "Combo 4: Chăm sóc thú cưng (ăn uống, vệ sinh, tắm rửa)",
-                    Price = 100000 
+                    Hours = "1-2h",
+                    Price = 100000
                 },
                 new Category
                 {
                     Id = 5,
                     CategoryName = "Combo 5: Tổng hợp (full option trên)",
-                    Price = 200000 
+                    Hours = "2-3h",
+                    Price = 200000
                 }
             );
 
@@ -150,7 +211,7 @@ namespace DAO.Model.Context
                 new JobPost
                 {
                     JobId = 1,
-                    EmployerId = 1, 
+                    EmployerId = 1,
                     Title = "Lau dọn văn phòng",
                     Description = "Cần tìm nhân viên lau dọn văn phòng 2 lần mỗi tuần.",
                     Location = "Hồ Chí Minh",
@@ -161,12 +222,12 @@ namespace DAO.Model.Context
                     Price = 200000,
                     Status = "Open",
                     CreateDate = DateTime.UtcNow,
-                    JobType = 1 
+                    JobType = 1
                 },
                 new JobPost
                 {
                     JobId = 2,
-                    EmployerId = 2, 
+                    EmployerId = 2,
                     Title = "Giặt ủi đồ gia đình",
                     Description = "Tìm nhân viên giặt ủi đồ cho gia đình 2 lần mỗi tháng.",
                     Location = "Hồ Chí Minh",
@@ -177,12 +238,12 @@ namespace DAO.Model.Context
                     Price = 80000,
                     Status = "Open",
                     CreateDate = DateTime.UtcNow,
-                    JobType = 1 
+                    JobType = 1
                 },
                 new JobPost
                 {
                     JobId = 3,
-                    EmployerId = 3, 
+                    EmployerId = 3,
                     Title = "Chăm sóc thú cưng",
                     Description = "Cần tìm người chăm sóc chó mèo trong thời gian đi công tác.",
                     Location = "Hồ Chí Minh",
@@ -193,12 +254,12 @@ namespace DAO.Model.Context
                     Price = 150000,
                     Status = "Open",
                     CreateDate = DateTime.UtcNow,
-                    JobType = 1 
+                    JobType = 1
                 },
                 new JobPost
                 {
                     JobId = 4,
-                    EmployerId = 4, 
+                    EmployerId = 4,
                     Title = "Dọn dẹp nhà cửa",
                     Description = "Cần tìm nhân viên dọn dẹp nhà cửa trước Tết.",
                     Location = "Hồ Chí Minh",
@@ -209,12 +270,12 @@ namespace DAO.Model.Context
                     Price = 300000,
                     Status = "Open",
                     CreateDate = DateTime.UtcNow,
-                    JobType = 1 
+                    JobType = 1
                 },
                 new JobPost
                 {
                     JobId = 5,
-                    EmployerId = 5, 
+                    EmployerId = 5,
                     Title = "Tổng hợp dịch vụ dọn dẹp",
                     Description = "Cần nhân viên tổng hợp dịch vụ dọn dẹp và giặt ủi cho một căn hộ lớn.",
                     Location = "Hồ Chí Minh",
@@ -225,7 +286,7 @@ namespace DAO.Model.Context
                     Price = 500000,
                     Status = "Open",
                     CreateDate = DateTime.UtcNow,
-                    JobType = 1 
+                    JobType = 1
                 }
             );
 
@@ -233,32 +294,32 @@ namespace DAO.Model.Context
                 new CategoryJobPost
                 {
                     Id = 1,
-                    CategoryId = 1, 
-                    JobPostId = 1  
+                    CategoryId = 1,
+                    JobPostId = 1
                 },
                 new CategoryJobPost
                 {
                     Id = 2,
-                    CategoryId = 2, 
-                    JobPostId = 2  
+                    CategoryId = 2,
+                    JobPostId = 2
                 },
                 new CategoryJobPost
                 {
                     Id = 3,
-                    CategoryId = 3, 
-                    JobPostId = 3  
+                    CategoryId = 3,
+                    JobPostId = 3
                 },
                 new CategoryJobPost
                 {
                     Id = 4,
-                    CategoryId = 4, 
-                    JobPostId = 4  
+                    CategoryId = 4,
+                    JobPostId = 4
                 },
                 new CategoryJobPost
                 {
                     Id = 5,
-                    CategoryId = 5, 
-                    JobPostId = 5  
+                    CategoryId = 5,
+                    JobPostId = 5
                 }
             );
 
@@ -267,39 +328,71 @@ namespace DAO.Model.Context
                 new EWallet
                 {
                     WalletId = 1,
-                    UserId = 1, 
-                    Balance = 1000000.00m, 
+                    UserId = 1,
+                    Balance = 1000000.00m,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 },
                 new EWallet
                 {
                     WalletId = 2,
-                    UserId = 2, 
-                    Balance = 500000.00m, 
+                    UserId = 2,
+                    Balance = 500000.00m,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 },
                 new EWallet
                 {
                     WalletId = 3,
-                    UserId = 3, 
-                    Balance = 750000.00m, 
+                    UserId = 3,
+                    Balance = 750000.00m,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 },
                 new EWallet
                 {
                     WalletId = 4,
-                    UserId = 4, 
-                    Balance = 250000.00m, 
+                    UserId = 4,
+                    Balance = 250000.00m,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 },
                 new EWallet
                 {
                     WalletId = 5,
-                    UserId = 5, 
+                    UserId = 5,
+                    Balance = 300000.00m,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new EWallet
+                {
+                    WalletId = 6,
+                    UserId = 6,
+                    Balance = 300000.00m,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new EWallet
+                {
+                    WalletId = 7,
+                    UserId = 7,
+                    Balance = 300000.00m,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new EWallet
+                {
+                    WalletId = 8,
+                    UserId = 8,
+                    Balance = 300000.00m,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new EWallet
+                {
+                    WalletId = 9,
+                    UserId = 9,
                     Balance = 300000.00m,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
@@ -311,19 +404,19 @@ namespace DAO.Model.Context
                 {
                     Id = 1,
                     JobId = 1,
-                    WorkerId = 3, 
+                    WorkerId = 3,
                     Message = "Tôi rất thích công việc này và muốn ứng tuyển.",
                     Status = "pending",
                     AppliedAt = DateTime.UtcNow,
-                    TypeJobPost = 1 
+                    TypeJobPost = 1
                 },
                 new Application
                 {
                     Id = 2,
-                    JobId = 2, 
-                    WorkerId = 4, 
+                    JobId = 2,
+                    WorkerId = 4,
                     Message = "Tôi có kinh nghiệm trong lĩnh vực giặt ủi.",
-                    Status = "accepted", 
+                    Status = "accepted",
                     AppliedAt = DateTime.UtcNow,
                     TypeJobPost = 1
                 },
@@ -331,29 +424,29 @@ namespace DAO.Model.Context
                 {
                     Id = 3,
                     JobId = 3,
-                    WorkerId = 5, 
+                    WorkerId = 5,
                     Message = "Tôi có nhiều kinh nghiệm chăm sóc thú cưng.",
-                    Status = "rejected", 
+                    Status = "rejected",
                     AppliedAt = DateTime.UtcNow,
-                    TypeJobPost = 1 
+                    TypeJobPost = 1
                 },
                 new Application
                 {
                     Id = 4,
-                    JobId = 4, 
-                    WorkerId = 2, 
+                    JobId = 4,
+                    WorkerId = 2,
                     Message = "Tôi sẵn sàng làm việc ngay.",
-                    Status = "pending", 
+                    Status = "pending",
                     AppliedAt = DateTime.UtcNow,
-                    TypeJobPost = 1 
+                    TypeJobPost = 1
                 },
                 new Application
                 {
                     Id = 5,
                     JobId = 5,
-                    WorkerId = 3, 
+                    WorkerId = 3,
                     Message = "Tôi rất muốn tham gia vào dự án này.",
-                    Status = "pending", 
+                    Status = "pending",
                     AppliedAt = DateTime.UtcNow,
                     TypeJobPost = 1
                 }
@@ -363,50 +456,50 @@ namespace DAO.Model.Context
                 new Review
                 {
                     ReviewId = 1,
-                    JobId = 1, 
-                    ReviewerId = 2, 
-                    ReviewedId = 3, 
-                    Rating = 4.5m, 
+                    JobId = 1,
+                    ReviewerId = 2,
+                    ReviewedId = 3,
+                    Rating = 4.5m,
                     Comment = "Công việc này rất tốt, tôi rất hài lòng!",
                     CreatedAt = DateTime.UtcNow
                 },
                 new Review
                 {
                     ReviewId = 2,
-                    JobId = 2, 
+                    JobId = 2,
                     ReviewerId = 3,
                     ReviewedId = 4,
-                    Rating = 5.0m, 
+                    Rating = 5.0m,
                     Comment = "Alice làm việc rất chuyên nghiệp!",
                     CreatedAt = DateTime.UtcNow
                 },
                 new Review
                 {
                     ReviewId = 3,
-                    JobId = 3, 
+                    JobId = 3,
                     ReviewerId = 4,
                     ReviewedId = 5,
-                    Rating = 3.0m, 
+                    Rating = 3.0m,
                     Comment = "Bob cần cải thiện một số kỹ năng.",
                     CreatedAt = DateTime.UtcNow
                 },
                 new Review
                 {
                     ReviewId = 4,
-                    JobId = 4, 
-                    ReviewerId = 5, 
-                    ReviewedId = 2, 
-                    Rating = 4.0m, 
+                    JobId = 4,
+                    ReviewerId = 5,
+                    ReviewedId = 2,
+                    Rating = 4.0m,
                     Comment = "John đã làm tốt công việc!",
                     CreatedAt = DateTime.UtcNow
                 },
                 new Review
                 {
                     ReviewId = 5,
-                    JobId = 5, 
-                    ReviewerId = 1, 
-                    ReviewedId = 4, 
-                    Rating = 4.8m, 
+                    JobId = 5,
+                    ReviewerId = 1,
+                    ReviewedId = 4,
+                    Rating = 4.8m,
                     Comment = "Alice rất chăm chỉ và tận tâm!",
                     CreatedAt = DateTime.UtcNow
                 }
@@ -416,40 +509,40 @@ namespace DAO.Model.Context
                 new Message
                 {
                     MessageId = 1,
-                    SenderId = 1, 
-                    ReceiverId = 2, 
+                    SenderId = 1,
+                    ReceiverId = 2,
                     Content = "Chào John, bạn có thể giúp tôi một việc không?",
                     SentAt = DateTime.UtcNow
                 },
                 new Message
                 {
                     MessageId = 2,
-                    SenderId = 2, 
-                    ReceiverId = 1, 
+                    SenderId = 2,
+                    ReceiverId = 1,
                     Content = "Chào Admin, tôi sẵn sàng giúp đỡ!",
                     SentAt = DateTime.UtcNow
                 },
                 new Message
                 {
                     MessageId = 3,
-                    SenderId = 3, 
-                    ReceiverId = 4, 
+                    SenderId = 3,
+                    ReceiverId = 4,
                     Content = "Alice, bạn có biết cách làm việc này không?",
                     SentAt = DateTime.UtcNow
                 },
                 new Message
                 {
                     MessageId = 4,
-                    SenderId = 4, 
-                    ReceiverId = 3, 
+                    SenderId = 4,
+                    ReceiverId = 3,
                     Content = "Vâng, tôi có thể giúp bạn với điều đó.",
                     SentAt = DateTime.UtcNow
                 },
                 new Message
                 {
                     MessageId = 5,
-                    SenderId = 5, 
-                    ReceiverId = 1, 
+                    SenderId = 5,
+                    ReceiverId = 1,
                     Content = "Admin, tôi cần thông tin về dự án mới.",
                     SentAt = DateTime.UtcNow
                 }
@@ -459,7 +552,7 @@ namespace DAO.Model.Context
                 new Profiles
                 {
                     ProfileId = 1,
-                    UserId = 2, // Giả sử là User John Doe
+                    UserId = 6, // Giả sử là User John Doe
                     Bio = "Kỹ năng giúp việc tận tâm, có khả năng nấu ăn và dọn dẹp tốt.",
                     Skills = "Nấu ăn, Giặt giũ, Lau nhà, Dọn dẹp, Chăm sóc thú cưng",
                     Experience = "5 năm kinh nghiệm trong việc làm giúp việc tại gia đình và văn phòng.",
@@ -479,7 +572,7 @@ namespace DAO.Model.Context
                 new Profiles
                 {
                     ProfileId = 3,
-                    UserId = 4, // Giả sử là User Alice Brown
+                    UserId = 7, // Giả sử là User Alice Brown
                     Bio = "Chuyên gia giúp việc tận tâm với sự chú ý đến chi tiết.",
                     Skills = "Giặt giũ, Lau nhà, Dọn dẹp, Nấu ăn, Chăm sóc thú cưng",
                     Experience = "6 năm kinh nghiệm giúp việc cho nhiều gia đình, bao gồm việc chăm sóc thú cưng.",
@@ -489,7 +582,7 @@ namespace DAO.Model.Context
                 new Profiles
                 {
                     ProfileId = 4,
-                    UserId = 5, // Giả sử là User Bob Johnson
+                    UserId = 8, // Giả sử là User Bob Johnson
                     Bio = "Người giúp việc chu đáo, có khả năng làm nhiều việc cùng lúc.",
                     Skills = "Dọn dẹp, Giặt giũ, Nấu ăn, Chăm sóc nhà cửa, Quản lý chi tiêu",
                     Experience = "3 năm làm việc tại nhiều gia đình với mức độ hài lòng cao từ khách hàng.",
@@ -499,7 +592,7 @@ namespace DAO.Model.Context
                 new Profiles
                 {
                     ProfileId = 5,
-                    UserId = 1, // Giả sử là User Admin
+                    UserId = 9, // Giả sử là User Admin
                     Bio = "Chuyên viên dịch vụ giúp việc với kỹ năng giao tiếp tốt.",
                     Skills = "Nấu ăn, Lau nhà, Giặt giũ, Dọn dẹp, Chăm sóc người cao tuổi",
                     Experience = "7 năm kinh nghiệm trong lĩnh vực giúp việc tại nhà.",
@@ -508,7 +601,7 @@ namespace DAO.Model.Context
                 }
             );
 
-            
+
         }
     }
 }
